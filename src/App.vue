@@ -1,15 +1,11 @@
 <template>
-  <div id="app">
-    <div v-if="this.currentPage === 'Main'">
-      <Main/>
-    </div>
-    <div v-else-if="this.currentPage === 'Login'">
-      <Login/>
-    </div>
-    <div v-else>
-      <Error/>
-    </div>
-  </div>
+  <v-app id="app">
+    <v-content>
+      <Main v-if="this.currentPage === 'Main'" />
+      <Login v-else-if="this.currentPage === 'Login'"/>
+      <Error v-else />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
