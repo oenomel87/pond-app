@@ -1,14 +1,15 @@
 <template>
-  <v-app id="app">
-    <v-content>
+  <section id="app">
+    <div class="container">
       <Main v-if="this.currentPage === 'Main'" />
       <Login v-else-if="this.currentPage === 'Login'"/>
       <Error v-else />
-    </v-content>
-  </v-app>
+    </div>
+  </section>
 </template>
 
 <script>
+
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
@@ -44,7 +45,7 @@ export default {
         method: 'get',
         url: `${API_ENDPOINT}/`,
         headers: {
-          Authorization: token,
+          Authorization: 'Bearer ' + token,
         }
       });
 
