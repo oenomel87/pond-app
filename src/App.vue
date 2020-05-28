@@ -15,9 +15,9 @@ import axios from 'axios';
 
 import { API_ENDPOINT, TOKEN_NAME } from './env';
 
-import Main from './components/Main';
-import Error from './components/Error';
-import Login from './components/Login';
+import Main from './pages/Main';
+import Error from './pages/Error';
+import Login from './pages/Login';
 
 export default {
   name: 'App',

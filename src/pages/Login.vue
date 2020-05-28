@@ -40,6 +40,11 @@
         </div>
       </div>
     </section>
+    <Modal
+      :show="showError"
+      :content="errorMessage"
+      v-on:modal-close="closeModal"
+    />
   </section>
 </template>
 
@@ -48,16 +53,21 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 import { API_ENDPOINT, TOKEN_NAME } from '../env';
+import Modal from '../components/Modal';
 
 export default {
   name: 'Login',
+
+  components: { Modal },
 
   data: function() {
     return {
       username: '',
       password: '',
       usernameValidation: '',
-      passwordValidation: ''
+      passwordValidation: '',
+      showError: false,
+      errorMessage: '',
     }
   },
 
@@ -82,18 +92,24 @@ export default {
         return;
       }
 
-      const res = await axios({
-        method: 'POST',
-        url: `${API_ENDPOINT}/api/auth?username=${this.username}&password=${this.password}`
-      });
+      try {
+        const res = await axios({
+          method: 'POST',
+          url: `${API_ENDPOINT}/api/auth?username=${this.username}&password=${this.password}`
+        });
+        
+        console.dir(res);
 
-      console.dir(res);
-
-      if(res.status !== 200) {
-        alert('잘못된 아이디/비밀번호입니다.');
-        return;
+        if(res.status !== 200) {
+          this.handleErrorAlert('잘못된 아이디/비밀번호 입니다.');
+          return;
+        }
+        Cookies.set(TOKEN_NAME, res.data);
+        location.reload();
+      } catch (error) {
+        this.handleErrorAlert('서비스에 문제가 생겼습니다.');
+        console.error(error);
       }
-      Cookies.set(TOKEN_NAME, res.data);
     },
 
     validate: function() {
@@ -108,6 +124,16 @@ export default {
     
     hasError: function() {
       return this.usernameValidation.length > 0 || this.passwordValidation.length > 0;
+    },
+
+    handleErrorAlert: function(errorMessage) {
+      this.errorMessage = errorMessage;
+      this.showError = true;
+    },
+
+    closeModal: function() {
+      this.showError = false;
+      this.errorMessage = '';
     }
   }
 }
@@ -122,6 +148,10 @@ export default {
 #login-container h1 {
   font-size: 3rem;
   text-align: center;
+  color: #2196F3;
+}
+
+#login-container label {
   color: #2196F3;
 }
 
