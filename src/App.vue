@@ -2,7 +2,8 @@
   <section id="app">
     <div class="container">
       <Main v-if="this.currentPage === 'Main'" />
-      <Login v-else-if="this.currentPage === 'Login'"/>
+      <Login v-else-if="this.currentPage === 'Login'" @move-page="changeCurrentPage"/>
+      <Signup v-else-if="this.currentPage === 'Signup'" @move-page="changeCurrentPage"/>
       <Error v-else />
     </div>
   </section>
@@ -18,12 +19,13 @@ import { API_ENDPOINT, TOKEN_NAME } from './env';
 import Main from './pages/Main';
 import Error from './pages/Error';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 export default {
   name: 'App',
 
   components: {
-    Main, Login, Error,
+    Main, Login, Error, Signup
   },
 
   data() {
@@ -64,6 +66,10 @@ export default {
   methods: {
     changeCurrentPage: function(page) {
       this.currentPage = page;
+    },
+
+    movePage: function(evt) {
+      console.dir(evt);
     }
   }
 }

@@ -31,12 +31,21 @@
               :class="isInvalidPassword"
               axlength="30"
               placeholder="비밀번호를 입력해주세요"
+              @keyup="detectKeyUp"
               v-model="password">
           </div>
           <p class="help" :class="isInvalidPassword">{{passwordValidation}}</p>
         </div>
         <div class="login-btn-wrapper">
-          <button id="login-btn" class="button is-fullwidth" v-on:click="login()">로그인</button>
+          <button id="login-btn" class="button is-fullwidth" @click="login()">로그인</button>
+        </div>
+        <div class="signup-wrapper columns is-mobile">
+          <div class="column is-two-thirds find-link">
+            <span>아이디/비밀번호를 잊으셨나요?</span>
+          </div>
+          <div class="column signup-link">
+            <span @click="moveToSignupPage()">가입하기</span>
+          </div>
         </div>
       </div>
     </section>
@@ -95,7 +104,7 @@ export default {
       try {
         const res = await axios({
           method: 'POST',
-          url: `${API_ENDPOINT}/api/auth?username=${this.username}&password=${this.password}`
+          url: `${API_ENDPOINT}/auth?username=${this.username}&password=${this.password}`
         });
         
         console.dir(res);
@@ -134,6 +143,16 @@ export default {
     closeModal: function() {
       this.showError = false;
       this.errorMessage = '';
+    },
+
+    detectKeyUp: function(evt) {
+      if(evt.keyCode === 13) {
+        this.login();
+      }
+    },
+
+    moveToSignupPage: function() {
+      this.$emit('move-page', 'Signup');
     }
   }
 }
@@ -163,5 +182,23 @@ export default {
   background: #2196F3;
   border-color: #2196F3;
   color: #ffffff;
+}
+
+.signup-wrapper {
+  padding-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #2196F3;
+}
+
+.signup-wrapper span {
+  cursor: pointer;
+}
+
+.signup-wrapper span:hover {
+  text-decoration: underline;
+}
+
+.signup-link {
+  text-align: end;
 }
 </style>
