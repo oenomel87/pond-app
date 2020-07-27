@@ -1,33 +1,32 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="logout-wrapper">
-        <button id="logout" class="button" @click="logout">Logout</button>
-      </div>
-      <section class="section">
-        <p class="primary-color total-amount-label">현재 금액</p>
-        <p class="total-amount">{{formattedAmount}} 원</p>
-      </section>
+  <div class="main-container">
+    <div class="icon-wrapper">
+      <i class="icon">menu</i>
+    </div>
+    <div class="container pond-card-container">
+      <pond-card :amount="totalAmount" card-name="현재잔고" />
     </div>
     <Modal
       :show="showError"
       :content="errorMessage"
       v-on:modal-close="closeModal"
     />
-  </section>
+  </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-import { API_ENDPOINT, TOKEN_NAME } from '../env';
-import Modal from '../components/Modal';
+import { API_ENDPOINT, TOKEN_NAME } from '../env.js';
+
+import PondCard from '../components/PondCard.vue';
+import Modal from '../components/Modal.vue';
 
 export default {
   name: 'Main',
 
-  components: { Modal },
+  components: { Modal, PondCard },
 
   created: function() {
     this.fetchTotalAmount();
@@ -38,29 +37,6 @@ export default {
       totalAmount: 0,
       showError: false,
       errorMessage: '',
-    }
-  },
-
-  computed: {
-    formattedAmount: function() {
-      if(this.totalAmount < 1000) {
-        return this.totalAmount;
-      }
-
-      const str = this.totalAmount + '';
-      let fmt = '';
-      for(let i = str.length - 1, j = 1; i >= 0; i--, j++) {
-        fmt = str[i] + fmt;
-        if(j !== 0 && j % 3 === 0) {
-          fmt = ',' + fmt;
-        }
-      }
-
-      if(fmt.indexOf(',') === 0) {
-        fmt = fmt.substring(1);
-      }
-
-      return fmt;
     }
   },
 
@@ -97,6 +73,17 @@ export default {
 </script>
 
 <style scoped>
+.main-container {
+  padding: 1.5rem;
+}
+
+.icon-wrapper {
+  padding-bottom: 1rem;
+}
+
+.icon-wrapper i {
+  cursor: pointer;
+}
 
 .primary-color {
   color: #2196F3;
@@ -125,4 +112,9 @@ export default {
   background: #E3F2FD;
 }
 
+.pond-card-container {
+  max-width: 400px;
+  min-width: 350px;
+  margin: 0 auto;
+}
 </style>

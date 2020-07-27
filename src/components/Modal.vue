@@ -57,17 +57,17 @@ export default {
   },
 
   computed: {
-    showModal: function() {
+    showModal() {
       return { 'is-active': this.show }
     }
   },
 
   methods: {
-    closeModal: function() {
+    closeModal() {
       this.$emit('modal-close');
     },
 
-    isNotEmpty: function(str) {
+    isNotEmpty(str) {
       return str != null && str.length > 0;
     }
   }

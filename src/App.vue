@@ -14,12 +14,12 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-import { API_ENDPOINT, TOKEN_NAME } from './env';
+import { API_ENDPOINT, TOKEN_NAME } from './env.js';
 
-import Main from './pages/Main';
-import Error from './pages/Error';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Main from './pages/Main.vue';
+import Error from './pages/Error.vue';
+import Login from './pages/Login.vue';
+import Signup from './pages/Signup.vue';
 
 export default {
   name: 'App',
@@ -64,12 +64,8 @@ export default {
   },
 
   methods: {
-    changeCurrentPage: function(page) {
+    changeCurrentPage(page) {
       this.currentPage = page;
-    },
-
-    movePage: function(evt) {
-      console.dir(evt);
     }
   }
 }
@@ -81,5 +77,30 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333333;
+}
+
+.icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 </style>

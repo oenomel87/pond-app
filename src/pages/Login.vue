@@ -61,8 +61,8 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-import { API_ENDPOINT, TOKEN_NAME } from '../env';
-import Modal from '../components/Modal';
+import { API_ENDPOINT, TOKEN_NAME } from '../env.js';
+import Modal from '../components/Modal.vue';
 
 export default {
   name: 'Login',
@@ -121,7 +121,7 @@ export default {
       }
     },
 
-    validate: function() {
+    validate() {
       if(this.username == null || this.username.length === 0) {
         this.usernameValidation = '아이디를 입력해주세요.';
       }
@@ -131,27 +131,27 @@ export default {
       }
     },
     
-    hasError: function() {
+    hasError() {
       return this.usernameValidation.length > 0 || this.passwordValidation.length > 0;
     },
 
-    handleErrorAlert: function(errorMessage) {
+    handleErrorAlert(errorMessage) {
       this.errorMessage = errorMessage;
       this.showError = true;
     },
 
-    closeModal: function() {
+    closeModal() {
       this.showError = false;
       this.errorMessage = '';
     },
 
-    detectKeyUp: function(evt) {
+    detectKeyUp(evt) {
       if(evt.keyCode === 13) {
         this.login();
       }
     },
 
-    moveToSignupPage: function() {
+    moveToSignupPage() {
       this.$emit('move-page', 'Signup');
     }
   }
